@@ -1,0 +1,66 @@
+<html>
+<head>
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scaleble=no,minimal-ui,viewport-fit=cover"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+</head>
+<body>
+<div style="position:absolute;top:40px;display:flex">
+	<input type="button" value="绘制canvas" onclick="draw_canvas();"/>
+	<input type="button" value="输出文本" onclick="output_text();"/>
+<input type="button" value="下载图片" onclick="download();" />
+<input type="button" value="复制文本" onclick="copy();"/>
+</div>
+<span id="tip" style="position:absolute;top:80;">提示信息</span>
+<div style="display:flex; position:absolute;top:100px; width:100%">
+<div style="overflow-y: hidden;height:300px">
+<canvas id="canvas"></canvas>
+</div>
+<textarea id="ta_test" value="此处输出文本"></textarea>
+</div>
+</body>
+<script>
+	
+function draw_canvas(){
+	var canvas = document.getElementById("canvas");
+	canvas.width = 200;
+	var ctx = document.getElementById("canvas").getContext("2d");
+	canvas.height = 1000;
+	ctx.fillStyle = "orange";
+	ctx.strokeStyle = "orange";
+	ctx.font = "20px serif";
+	for(var i = 0; i < 50; i++){
+		ctx.fillText("dddddd_" + i, 10, 20*(i+1));
+	}
+}
+function output_text(){
+	var ta = document.getElementById("ta_test");
+	for(var i = 0; i < 50; i++){
+		ta.value = ta.value + "dddd_" + i + "\r\n";
+	}
+}
+
+function copy(){
+	var ta = document.getElementById("ta_test");
+	ta.select();
+	var span = document.getElementById("tip");
+	if(document.execCommand("copy")){
+		
+		span.innerText = "复制成功";
+	}else{
+		span.innerText = "复制失败";
+	}
+}
+
+function download(){
+	var canvas = document.getElementById("canvas");
+	var a = document.createElement("a");
+	var src_url = canvas.toDataURL("");
+	var url = canvas.toDataURL("image/jpeg").replace("image/jpeg", "image/octet-stream");
+	// var span = document.getElementById("t_span");
+	// span.innerText = url;
+	a.download = "image.jpeg";
+	a.href = url;
+	a.click();
+}
+</script>
+</html>
