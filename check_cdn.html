@@ -1,0 +1,85 @@
+<html>
+<head>
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scaleble=no,minimal-ui,viewport-fit=cover"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<script>
+var cdnUrls = ["https://gameh5-hw-qj.jxad126.com/gamecenter", "https://gameh5-hw-gj.atyx365.com/gamecenter", "https://gameh5-hw-gj.gzyhzs88.com/gamecenter", "https://gameh5-hw-gj.wangjuns.com/gamecenter", "https://gameh5-hw-gj.tehkqyy.com/gamecenter", "https://gameh5-hw-gj.sxforge.com/gamecenter"];
+var checkUrls = [];
+var checkIndex = 0;
+function displayInfo(info){
+	var text = document.querySelector(".status").innerHTML;
+	document.querySelector(".status").innerHTML = text + info + "<br/>";
+}
+function sendRequest(url, method, callback){
+	var xhr = new XMLHttpRequest();
+	xhr.open(method, url, true);
+	xhr.onreadystatechange = function(){
+		if(xhr.readyState == 4){
+			if(xhr.status == 200){
+				callback({code:0, readyState:xhr.readyState, text:xhr.responseText});
+			}else{
+				callback({code:1, readyState:xhr.readyState});
+			}
+		}
+	}
+	xhr.send();
+}
+
+function checkCallback(data){
+	if(data.code == 0){
+		displayInfo(data.responseText);
+	}else{
+		displayInfo("<font style='color:red'>check error</font>");
+	}
+	checkNext();
+}
+
+function checkNext(){
+	if(checkIndex == checkUrls.length){
+		displayInfo("check finish");
+		return;
+	}
+	var targetUrl = checkUrls[checkIndex];
+	checkIndex++;
+	displayInfo("check url:" + targetUrl);
+	sendRequest(targetUrl, "GET", checkCallback);
+}
+
+function checkMH5(){
+	checkIndex = 0;
+	var len = cdnUrls.length;
+	checkUrls = [];
+	document.querySelector(".status").innerHTML = "";
+	for(var idx = 0; idx < len; idx++){
+		var targetUrl = cdnUrls[idx] + "/aggameh5";
+		var versionUrl = targetUrl + "/version.txt";
+		var manifestUrl = targetUrl + "/manifest.json";
+		checkUrls.push(versionUrl);
+		checkUrls.push(manifestUrl);
+	}
+	checkNext();
+}
+function checkPCH5(){
+	checkIndex = 0;
+	var len = cdnUrls.length;
+	checkUrls = [];
+	document.querySelector(".status").innerHTML = "";
+	for(var idx = 0; idx < len; idx++){
+		var targetUrl = cdnUrls[idx] + "/aggamepch5";
+		var versionUrl = targetUrl + "/version.txt";
+		var manifestUrl = targetUrl + "/manifest.json";
+		checkUrls.push(versionUrl);
+		checkUrls.push(manifestUrl);
+	}
+	checkNext();
+}
+</script>
+</head>
+<body>
+<div class="op_buttons">
+<input type="button" onclick="checkMH5();" value="MH5"/>
+<input type="button" onclick="checkPCH5();" value="PCH5"/>
+</div>
+<div class="status"></div>
+</body>
+</html>
