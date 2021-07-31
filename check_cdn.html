@@ -3,7 +3,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scaleble=no,minimal-ui,viewport-fit=cover"/>
 <meta name="apple-mobile-web-app-capable" content="yes"/>
 <script>
-var cdnUrls = ["https://gameh5-hw-qj.jxad126.com/gamecenter", "https://gameh5-hw-gj.atyx365.com/gamecenter", "https://gameh5-hw-gj.gzyhzs88.com/gamecenter", "https://gameh5-hw-gj.wangjuns.com/gamecenter", "https://gameh5-hw-gj.tehkqyy.com/gamecenter", "https://gameh5-hw-gj.sxforge.com/gamecenter"];
+var cdnUrls = ["https://gameh5-hw-gj.jxad126.com/gamecenter", "https://gameh5-hw-gj.atyx365.com/gamecenter", "https://gameh5-hw-gj.gzyhzs88.com/gamecenter", "https://gameh5-hw-gj.wangjuns.com/gamecenter", "https://gameh5-hw-gj.tehkqyy.com/gamecenter", "https://gameh5-hw-gj.sxforge.com/gamecenter"];
 var checkUrls = [];
 var checkIndex = 0;
 function displayInfo(info){
@@ -27,7 +27,7 @@ function sendRequest(url, method, callback){
 
 function checkCallback(data){
 	if(data.code == 0){
-		displayInfo(data.responseText);
+		displayInfo(data.text);
 	}else{
 		displayInfo("<font style='color:red'>check error</font>");
 	}
