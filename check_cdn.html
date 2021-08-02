@@ -52,8 +52,8 @@ function checkMH5(){
 	document.querySelector(".status").innerHTML = "";
 	for(var idx = 0; idx < len; idx++){
 		var targetUrl = cdnUrls[idx] + "/aggameh5";
-		var versionUrl = targetUrl + "/version.txt";
-		var manifestUrl = targetUrl + "/manifest.json";
+		var versionUrl = targetUrl + "/version.txt?r=" + Math.random();
+		var manifestUrl = targetUrl + "/manifest.json?r=" + Math.random();
 		checkUrls.push(versionUrl);
 		checkUrls.push(manifestUrl);
 	}
@@ -66,8 +66,8 @@ function checkPCH5(){
 	document.querySelector(".status").innerHTML = "";
 	for(var idx = 0; idx < len; idx++){
 		var targetUrl = cdnUrls[idx] + "/aggamepch5";
-		var versionUrl = targetUrl + "/version.txt";
-		var manifestUrl = targetUrl + "/manifest.json";
+		var versionUrl = targetUrl + "/version.txt?r=" + Math.random();
+		var manifestUrl = targetUrl + "/manifest.json?r=" + Math.random();
 		checkUrls.push(versionUrl);
 		checkUrls.push(manifestUrl);
 	}
