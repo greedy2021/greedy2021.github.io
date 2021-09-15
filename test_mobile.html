@@ -2,9 +2,21 @@
 <head>
 <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scaleble=no,minimal-ui,viewport-fit=cover"/>
 <meta name="apple-mobile-web-app-capable" content="yes"/>
+<style>
+.scrollWrapper {
+    position: absolute;/* 绝对定位，进行内部滚动 */
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    overflow-y: atuo;/* 或者scroll */
+    -webkit-overflow-scrolling: touch;/* 解决ios滑动不流畅问题 */
+	background-color:black;
+}
+</style>
 </head>
 <body>
-<div id="div_cont" style="position:absolute;width:100%;height:100vh;background-color:black">
+<div id="div_cont" class="scrollWrapper">
 <span id="txt_info" style="position:relative;top:50%;color:white"></span>
 <input style="position:relative;top:100px;left:10px;width:200px;height:40px"/>
 <input id="ipt_bottom" style="position:relative;top:200px;left:10px;width:200px;height:40px"/>
@@ -16,19 +28,18 @@ window.onload = function(){
 setInterval(()=>{
 let clientTop=document.body.clientHeight;
 let span = document.getElementById("txt_info");
-let info = "----底部---可视区域的高度"+window.innerHeight+"屏幕高度-"+clientTop + "<br\>";
-info += "offsetHeight", document.body.offsetHeight + "<br\>";
-info += "scrollTop", document.body.scrollTop + "<br\>";
+let info = "----底部---可视区域的高度"+window.innerHeight+"屏幕高度-"+clientTop + "<br/>";
+info += "offsetHeight", document.body.offsetHeight + "<br/>";
+info += "scrollTop", document.body.scrollTop + "<br/>";
 const keyboard = clientTop - window.innerHeight;
-info += "keyboard" + keyboard + "<br\>";
+info += "keyboard" + keyboard + "<br/>";
 span.innerHTML = info;
 let ipt_bottom = document.getElementById("ipt_bottom");
-ipt_bottom.top = (window.innerHeight - 100) + "px" 
-let div_cont = document.getElementById("div_cont");
-div_cont.style.top = keyboard + "px";
+ipt_bottom.top = (window.innerHeight - 40) + "px" 
 
 }, 1000);
-
 }
+var keyboardup = false;
+var keyboarddown = true;
 </script>
 </html>
