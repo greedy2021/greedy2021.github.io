@@ -9,22 +9,28 @@
     right: 0;
     top: 0;
     bottom: 0;
-    overflow-y: auto;/* 或者scroll */
-    -webkit-overflow-scrolling: touch;/* 解决ios滑动不流畅问题 */
 	background-color:black;
 }
 </style>
 </head>
-<body style="height:120vh">
+<body>
 <div id="div_cont" class="scrollWrapper">
-<span id="txt_info" style="position:fixed;top:30%;color:white"></span>
-<input style="position:relative;top:10%;left:10px;width:200px;height:40px"/>
-<input id="ipt_bottom" style="position:relative;top:60%;left:10px;width:200px;height:40px"/>
+<span id="txt_info" style="position:fixed;top:40px;color:white"></span>
+<input id="ipt_top" style="position:relative;top:10%;left:10px;width:200px;height:40px"/>
+<input id="ipt_middle" style="position:relative;top:60%;left:10px;width:200px;height:40px"/>
 <input id="ipt_bottom" style="position:relative;top:80%;left:10px;width:200px;height:40px"/>
 </div>
 </body>
 <script>
 window.onload = function(){
+
+let ipt_top = document.getElementById("ipt_top");
+let ipt_middle = document.getElementById("ipt_middle");
+let ipt_bottom = document.getElementById("ipt_bottom");
+
+ipt_top.style.top = "0px";
+ipt_middle.style.top = (window.innerHeight - 120) / 2 + "px";
+ipt_bottom.style.top = (window.innerHeight - 120) + "px";
 
 setInterval(()=>{
 let clientTop=document.body.clientHeight;
