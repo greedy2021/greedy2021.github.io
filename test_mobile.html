@@ -5,19 +5,21 @@
 <style>
 .scrollWrapper {
     position: absolute;/* 绝对定位，进行内部滚动 */
-    width: 100%;
-    height: 100%;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
 	background-color:black;
 }
 </style>
 </head>
 <body style="background-color:green">
 <div id="div_cont" class="scrollWrapper">
-<span id="txt_info" style="position:fixed;top:40px;color:white"></span>
 <input id="ipt_top" style="position:relative;top:10%;left:10px;width:200px;height:40px"/>
 <input id="ipt_middle" style="position:relative;top:60%;left:10px;width:200px;height:40px"/>
 <input id="ipt_bottom" style="position:relative;top:80%;left:10px;width:200px;height:40px"/>
 </div>
+<span id="txt_info" style="position:fixed;top:40px;color:white"></span>
 </body>
 <script>
 window.onload = function(){
@@ -40,6 +42,7 @@ info += "scrollTop-" + document.body.scrollTop + ", div_scroll_top:" + div_cont.
 const keyboard = clientTop - window.innerHeight;
 info += "keyboard" + keyboard + "<br/>";
 span.innerHTML = info;
+//span.style.top = 
 
 }, 1000);
 }
