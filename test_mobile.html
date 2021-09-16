@@ -36,13 +36,13 @@ setInterval(()=>{
 let clientTop=document.body.clientHeight;
 let span = document.getElementById("txt_info");
 let div_cont = document.getElementById("div_cont");
-let info = "----底部---可视区域的高度"+window.innerHeight+"屏幕高度-"+clientTop + "<br/>";
-info += "offsetHeight" + document.body.offsetHeight + "<br/>";
-info += "scrollTop-" + document.body.scrollTop + ", div_scroll_top:" + div_cont.scrollTop + "<br/>";
+let info = "body.scrollHeight:"+document.body.scrollHeight+",body.offsetHeight:"+document.body.offsetHeight + "<br/>";
+info += ".body.clientHeight" + document.body.clientHeight + ",window.innerHeight" + window.innerHeight + "<br/>";
+info += "body.scrollTop:" + document.body.scrollTop + ", screen.height:" + window.screen.height + "<br/>";
 const keyboard = clientTop - window.innerHeight;
-info += "keyboard" + keyboard + "<br/>";
+info += "screen.availHeight" + window.screen.availHeight + "<br/>";
 span.innerHTML = info;
-//span.style.top = 
+span.style.top = 40 + document.body.scrollTop + "px";
 
 }, 1000);
 }
