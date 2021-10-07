@@ -32,7 +32,13 @@ let ipt_bottom = document.getElementById("ipt_bottom");
 ipt_top.style.top = "0px";
 ipt_middle.style.top = (window.innerHeight - 120) / 2 + "px";
 ipt_bottom.style.top = (window.innerHeight - 120) + "px";
-
+ipt_bottom.addEventListener("focus", ()=>{
+	console.log("hahaha");
+	setTimeout(()=>{
+		console.log("scroll");
+		ipt_bottom.scrollIntoView();
+	}, 200);
+});
 setInterval(()=>{
 let clientTop=document.body.clientHeight;
 let span = document.getElementById("txt_info");
