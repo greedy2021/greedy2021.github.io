@@ -31,13 +31,18 @@ let ipt_bottom = document.getElementById("ipt_bottom");
 
 ipt_top.style.top = "0px";
 ipt_middle.style.top = (window.innerHeight - 120) / 2 + "px";
-ipt_bottom.style.top = (window.innerHeight - 90) + "px";
+ipt_bottom.style.top = (window.innerHeight - 120) + "px";
 ipt_bottom.addEventListener("focus", ()=>{
 	console.log("hahaha");
+	ipt_bottom.value="focus";
 	setTimeout(()=>{
 		console.log("scroll");
 		ipt_bottom.scrollIntoView(true);
 	}, 200);
+});
+ipt_bottom.addEventListener("blur", ()=>{
+	console.log("hahaha");
+	ipt_bottom.value = "blur";
 });
 setInterval(()=>{
 let clientTop=document.body.clientHeight;
