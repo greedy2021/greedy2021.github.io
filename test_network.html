@@ -4,6 +4,9 @@
 <script>
 var connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
 var div = document.getElementById("netinfo");
+if(!connection){
+div.innerHtml="connect is undefined";
+}else
 div.innerHtml="connection type:" + connection.type;
 </script>
 </html>
