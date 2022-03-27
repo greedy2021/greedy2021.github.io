@@ -1,0 +1,9 @@
+<html>
+<div id="netinfo">
+</div>
+<script>
+var connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+var div = document.getElementById("netinfo");
+div.innerHtml="connection type:" + connection.type;
+</script>
+</html>
