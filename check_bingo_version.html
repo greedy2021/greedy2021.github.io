@@ -1,0 +1,163 @@
+<html>
+<head>
+<title>Check Version</title>
+</head>
+<style type="text/css">
+	.title{
+		background-color: 0xbbbbbb;
+		font-family: Sans-serif;
+		text-align: left;
+		font-size: 30px;
+		color: black;
+		width: 100%;
+	}
+	.version{
+		background-color: white;
+		color: black;
+		font-size: 25px;
+		font-family: arial;
+		text-align: left;
+		width: 100%;
+	}
+	.detail{
+		background-color: white;
+		color: black;
+		font-style: italic;
+		font-family: arial;
+		font-size: 25px;
+		width: 100%;
+	}
+	.area{
+		background-color: #f1f1f1;
+		border-style: dotted;
+		width: 80%;
+		margin-left: auto;
+		margin-right: auto;
+		margin-top: 10px;
+	}
+	.time_down{
+		margin-left: auto;
+		margin-right: auto;
+		background-color: #aaaaaa;
+		text-align: center;
+		width: 60px;
+		height: 60px;
+		color: green;
+		font-family: SimSun;
+		font-size: 40px;
+	}
+	.count_down{
+		color: green;
+		font-size: 30px;
+	}
+
+</style>
+<body>
+<div class="area" id="online_div">
+	<div class="title">ONLINE</div>
+	<div class="version">Version Checking...</div>
+	<div class="detail">Detail Checking...</div>
+</div>
+<div class="area" id="uat_div">
+	<div class="title">UAT</div>
+	<div class="version">Version Checking...</div>
+	<div class="detail">Detail Checking...</div>
+</div>
+</body>
+<script type="text/javascript">
+	var check_urls = {
+		online:{
+			title:"ONLINE",
+			version:"https://g04-gci-web-p.g04gciweb.com/bggameh5/version.txt",
+			detail:"https://g04-gci-web-p.g04gciweb.com/bggameh5/manifest.json"
+		},
+		uat:{
+			title:"UAT",
+			version:"https://g04-gci-web-p.uatagqj.com/bggameh5/version.txt",
+			detail:"https://g04-gci-web-p.uatagqj.com/bggameh5/manifest.json"
+		}
+	};
+	var check_count_down = {
+		online:{
+			time:3,
+			version:false,
+			detail:false
+		},
+		uat:{
+			time:3,
+			version:false,
+			detail:false
+		}
+	};
+	function sendRequest(url, method, callback){
+		var xhr = new XMLHttpRequest();
+		xhr.open(method, url, true);
+		xhr.onreadystatechange = function(){
+			if(xhr.readyState == 4){
+				if(xhr.status == 200){
+					callback({code:0, readyState:xhr.readyState, status:xhr.status, text:xhr.responseText});
+				}else{
+					callback({code:1, readyState:xhr.readyState, status:xhr.status});
+				}
+			}
+		}
+		xhr.send();
+	}
+	var start = 3;
+	function check_version(){
+		let keys = Object.keys(check_urls);
+		for(let idx = 0; idx < keys.length; idx++){
+			let key = keys[idx];
+			let flag = check_count_down[key];
+			if(flag.version == false && flag.time == 0 && flag.detail == false){
+				// begin check
+				flag.version = true;
+				flag.detail = true;
+				sendRequest(check_urls[key].version + "?v=" + Math.random(), "GET", (data)=>{
+					if(data.code != 0){
+						// check fail
+						document.querySelector("#" + key + "_div .version").innerHTML = "<font style='color:red'>Check error:" + data.status + "</font>";
+					}else{
+						document.querySelector("#" + key + "_div .version").innerHTML = "Version: " + data.text;
+					}
+					check_count_down[key].version = false;
+					if(check_count_down[key].detail == false){
+						check_count_down[key].time = 3;
+					}
+				});
+				sendRequest(check_urls[key].detail + "?v=" + Math.random(), "GET", (data)=>{
+					if(data.code != 0){
+						// check fail
+						document.querySelector("#" + key + "_div .detail").innerHTML = "<font style='color:red'>Check error:" + data.status + "</font>";
+					}else{
+						data.text = data.text.replace(/\n/g,"</br>");
+						document.querySelector("#" + key + "_div .detail").innerHTML = data.text;
+					}
+					check_count_down[key].detail = false;
+					if(check_count_down[key].version == false){
+						check_count_down[key].time = 3;
+					}
+				});
+			}
+		}
+
+	}
+	check_version();
+	window.setInterval(()=>{
+		let keys = Object.keys(check_urls);
+		for(let idx = 0; idx < keys.length; idx++){
+			let key = keys[idx];
+			let entity = check_urls[key];
+			let flag = check_count_down[key];
+			if(flag.time > 0){
+				flag.time -= 1;
+			}else{
+				flag.time = 0;
+			}
+			console.log("#"+key+"_div " + ".title");
+			document.querySelector("#"+key+"_div " + ".title").innerHTML = entity.title + "  <font class='count_down'>" + flag.time + "</font>";
+		}
+		check_version();
+	}, 1000);
+</script>
+</html>
