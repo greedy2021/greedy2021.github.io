@@ -4,28 +4,31 @@
 </head>
 <style type="text/css">
 	.title{
-		background-color: 0xbbbbbb;
-		font-family: Sans-serif;
+		font-family: Helvetica;
 		text-align: left;
 		font-size: 30px;
 		color: black;
-		width: 100%;
+		margin-left: 10px;
+		margin-right: 10px;
 	}
 	.version{
-		background-color: white;
 		color: black;
 		font-size: 25px;
 		font-family: arial;
 		text-align: left;
-		width: 100%;
+		margin-top: 10px;
+		margin-left: 10px;
+		margin-right: 10px;
 	}
 	.detail{
-		background-color: white;
 		color: black;
 		font-style: italic;
-		font-family: arial;
-		font-size: 25px;
-		width: 100%;
+		font-family: Georgia;
+		font-size: 20px;
+		margin-top: 20px;
+		margin-left: 10px;
+		margin-right: 10px;
+		margin-bottom: 10px;
 	}
 	.area{
 		background-color: #f1f1f1;
@@ -63,6 +66,11 @@
 	<div class="version">Version Checking...</div>
 	<div class="detail">Detail Checking...</div>
 </div>
+<div class="area" id="z01_div">
+	<div class="title">Z01</div>
+	<div class="version">Version Checking...</div>
+	<div class="detail">Detail Checking...</div>
+</div>
 </body>
 <script type="text/javascript">
 	var check_urls = {
@@ -75,16 +83,26 @@
 			title:"UAT",
 			version:"https://g04-gci-web-p.uatagqj.com/bggameh5/version.txt",
 			detail:"https://g04-gci-web-p.uatagqj.com/bggameh5/manifest.json"
+		},
+		z01:{
+			title:"Z01",
+			version:"https://gci-web-z01.uatagqj.com/bggameh5/version.txt",
+			detail:"https://gci-web-z01.uatagqj.com/bggameh5/manifest.json"
 		}
 	};
 	var check_count_down = {
 		online:{
-			time:3,
+			time:0,
 			version:false,
 			detail:false
 		},
 		uat:{
-			time:3,
+			time:0,
+			version:false,
+			detail:false
+		},
+		z01:{
+			time:0,
 			version:false,
 			detail:false
 		}
@@ -131,6 +149,7 @@
 						document.querySelector("#" + key + "_div .detail").innerHTML = "<font style='color:red'>Check error:" + data.status + "</font>";
 					}else{
 						data.text = data.text.replace(/\n/g,"</br>");
+						data.text = data.text.replace(/ /g,"&nbsp;");
 						document.querySelector("#" + key + "_div .detail").innerHTML = data.text;
 					}
 					check_count_down[key].detail = false;
